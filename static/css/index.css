@@ -1,0 +1,46 @@
+@font-face {
+  font-family: NoteSansJP;
+  src: url('../fonts/NotoSansJP-Medium.otf'); }
+body {
+  background-color: #2b2b2b;
+  color: #FFF; }
+#time {
+  font-size: 25px;
+  background-color: #000;
+  border-radius: 5px;
+  padding: 5px 10px; }
+.started {
+  margin-right: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #0c5900;
+  color: #FFF;
+  font-size: 25px; }
+.stopped {
+  margin-right: 20px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: #780000;
+  color: #FFF;
+  font-size: 25px; }
+.scene {
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #780000;
+  color: #FFF;
+  font-size: 30px;
+  font-family: NoteSansJP; }
+.transition {
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #0c5900;
+  color: #FFF;
+  font-size: 30px;
+  font-family: NoteSansJP; }
+.mute {
+  margin: 10px;
+  margin-left: 25px; }
