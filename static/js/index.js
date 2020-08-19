@@ -5,38 +5,38 @@ isStreaming = false
 document.getElementById('address').value = `${location.hostname}:4444`
 
 function streaming(isStarted) {
-  const transitionElement = document.getElementById('streaming');
+  const streamingElement = document.getElementById('streaming');
   if(isStarted){
     if(window.confirm('STOP STREAMING?')){
       obs.send('StopStreaming');
-      transitionElement.className = 'stopped'
-      transitionElement.textContent = 'Streaming: OFFLINE';
+      streamingElement.className = 'stopped'
+      streamingElement.textContent = 'Streaming: OFFLINE';
       isStreaming=!isStreaming
     }
   }else{
     if(window.confirm('START STREAMING?')){
       obs.send('StartStreaming');
-      transitionElement.className = 'started'
-      transitionElement.textContent = 'Streaming: ONLINE';
+      streamingElement.className = 'started'
+      streamingElement.textContent = 'Streaming: ONLINE';
       isStreaming=!isStreaming
     }
   }
 }
 
 function recording(isStarted) {
-  const transitionElement = document.getElementById('recording');
+  const recordingElement = document.getElementById('recording');
   if(isStarted){
     if(window.confirm('STOP RECORDING?')){
       obs.send('StopRecording');
-      transitionElement.className = 'stopped'
-      transitionElement.textContent = 'Recording: stop';
+      recordingElement.className = 'stopped'
+      recordingElement.textContent = 'Recording: stop';
       isRecording=!isRecording
     }
   }else{
     if(window.confirm('START RECORDING?')){
       obs.send('StartRecording');
-      transitionElement.className = 'started'
-      transitionElement.textContent = 'Recording: start';
+      recordingElement.className = 'started'
+      recordingElement.textContent = 'Recording: start';
       isRecording=!isRecording
     }
   }
@@ -56,7 +56,7 @@ document.getElementById('connect').addEventListener('click', e => {
       if(!status.studioMode) obs.send('EnableStudioMode').catch((err)=>{console.error(err)});
     })
     obs.send('GetSceneList').then(data => {
-      const sceneListDiv = document.getElementById('scene_list');
+      const sceneList = document.getElementById('scene_list');
       data.scenes.forEach(scene => {
         const sceneElement = document.createElement('button');
         sceneElement.textContent = scene.name;
@@ -66,12 +66,12 @@ document.getElementById('connect').addEventListener('click', e => {
             'scene-name': scene.name
           });
         };
-        sceneListDiv.appendChild(sceneElement);
+        sceneList.appendChild(sceneElement);
       });
     }).catch((err)=>{console.log(err)});
 
     obs.send('GetTransitionList').then(data => {
-      const transitionListDiv = document.getElementById('transition_list');
+      const transitionList = document.getElementById('transition_list');
       data.transitions.forEach(transition => {
         const transitionElement = document.createElement('button');
         transitionElement.textContent = transition.name;
@@ -84,7 +84,7 @@ document.getElementById('connect').addEventListener('click', e => {
             'with-transition.name': transition.name
           });
         };
-        transitionListDiv.appendChild(transitionElement);
+        transitionList.appendChild(transitionElement);
       });
     }).catch((err)=>{console.log(err)});
 
@@ -94,43 +94,43 @@ document.getElementById('connect').addEventListener('click', e => {
       const controller = document.getElementById('controller_list');
 
       if(isStreaming){
-        const transitionElement = document.createElement('button');
-        transitionElement.textContent = 'Streaming: ONLINE';
-        transitionElement.className = 'started'
-        transitionElement.id = 'streaming'
-        transitionElement.onclick = function() {
+        const streamingStatusElement = document.createElement('button');
+        streamingStatusElement.textContent = 'Streaming: ONLINE';
+        streamingStatusElement.className = 'started'
+        streamingStatusElement.id = 'streaming'
+        streamingStatusElement.onclick = function() {
           streaming(!isStreaming)
         };
-        controller.appendChild(transitionElement);
+        controller.appendChild(streamingStatusElement);
       }else{
-        const transitionElement = document.createElement('button');
-        transitionElement.textContent = 'Streaming: OFFLINE';
-        transitionElement.className = 'stopped'
-        transitionElement.id = 'streaming'
-        transitionElement.onclick = function() {
+        const streamingStatusElement = document.createElement('button');
+        streamingStatusElement.textContent = 'Streaming: OFFLINE';
+        streamingStatusElement.className = 'stopped'
+        streamingStatusElement.id = 'streaming'
+        streamingStatusElement.onclick = function() {
           streaming(isStreaming)
         };
-        controller.appendChild(transitionElement);
+        controller.appendChild(streamingStatusElement);
       }
 
       if(isRecording){
-        const transitionElement = document.createElement('button');
-        transitionElement.textContent = 'Recording: start';
-        transitionElement.className = 'started'
-        transitionElement.id = 'recording'
-        transitionElement.onclick = function() {
+        const recordingStatusElement = document.createElement('button');
+        recordingStatusElement.textContent = 'Recording: start';
+        recordingStatusElement.className = 'started'
+        recordingStatusElement.id = 'recording'
+        recordingStatusElement.onclick = function() {
           recording(!isRecording)
         };
-        controller.appendChild(transitionElement);
+        controller.appendChild(recordingStatusElement);
       }else{
-        const transitionElement = document.createElement('button');
-        transitionElement.textContent = 'Recording: stop';
-        transitionElement.className = 'stopped'
-        transitionElement.id = 'recording'
-        transitionElement.onclick = function() {
+        const recordingStatusElement = document.createElement('button');
+        recordingStatusElement.textContent = 'Recording: stop';
+        recordingStatusElement.className = 'stopped'
+        recordingStatusElement.id = 'recording'
+        recordingStatusElement.onclick = function() {
           recording(isRecording)
         };
-        controller.appendChild(transitionElement);
+        controller.appendChild(recordingStatusElement);
       }
     }).catch((err)=>{console.log(err)});
 
@@ -192,25 +192,20 @@ document.getElementById('disconnect').addEventListener('click', e => {
   document.getElementById("connect").disabled = false
   document.getElementById("disconnect").disabled = true
   while(document.getElementById('scene_list').firstChild){
-    document.getElementById('scene_list').removeChild(document.getElementById('scene_list').firstChild);
-  }
+    document.getElementById('scene_list').removeChild(document.getElementById('scene_list').firstChild); }
   while(document.getElementById('transition_list').firstChild){
-    document.getElementById('transition_list').removeChild(document.getElementById('transition_list').firstChild);
-  }
+    document.getElementById('transition_list').removeChild(document.getElementById('transition_list').firstChild); }
   while(document.getElementById('controller_list').firstChild){
-    document.getElementById('controller_list').removeChild(document.getElementById('controller_list').firstChild);
-  }
+    document.getElementById('controller_list').removeChild(document.getElementById('controller_list').firstChild); }
   while(document.getElementById('audio_list').firstChild){
-    document.getElementById('audio_list').removeChild(document.getElementById('audio_list').firstChild);
-  }
+    document.getElementById('audio_list').removeChild(document.getElementById('audio_list').firstChild); }
 });
 
 setInterval(function(){
-  const date = new Date(),
-    time =
-      ('0' + date.getHours()).slice(-2) + ':' +
-      ('0' + date.getMinutes()).slice(-2) + ':' +
-      ('0' + date.getSeconds()).slice(-2) + '.' +
-      ('00' + date.getMilliseconds()).slice(-3);
-  document.getElementById('time').textContent = time;
+  const date = new Date()
+  document.getElementById('time').textContent  =
+    ('0' + date.getHours()).slice(-2) + ':' +
+    ('0' + date.getMinutes()).slice(-2) + ':' +
+    ('0' + date.getSeconds()).slice(-2) + '.' +
+    ('00' + date.getMilliseconds()).slice(-3);
 }, 0);
