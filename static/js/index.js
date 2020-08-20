@@ -183,7 +183,7 @@ document.getElementById('connect').addEventListener('click', e => {
     });
 
   }).catch((err) => {
-    console.log(err)
+    window.alert(err.error)
   });
 });
 
